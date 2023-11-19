@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <style>
+        body {
+        
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            
+        background-image: url('/noguess.jpg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image file */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+
+
+        }
+
+        #container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        .player-box {
+            width: 300px;
+            height: 50px;
+            background-color: #3498db;
+            color: white;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .correct {
+            background-color: #27ae60 !important;
+        }
+
+        input[type="text"],
+        input[type="button"] {
+            padding: 10px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        input[type="button"] {
+            background-color: #2ecc71;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #container:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            color: #3498db;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2>Guess a number between 1 to 20</h2>
+
+        <div class="input-container">
+            <label for="Num">Enter a number</label><br>
+            <input type="text" name="Num" id="number"/>
+            <input type="button" value="Check Number" onClick="checkNo()">
+            <div id="d1" class="player-box">
+                <p id="p1"></p>
+            </div>
+        </div>
+
+        <div id="result"></div>
+
+        <button onclick="restart()">Restart Game</button>
+    </div>
+    
+    <script>
+        let rnum = Math.floor(Math.random() * 20) + 1;
+        let score1 = 20;
+        let player1Correct = false;
+
+        function checkNo() {
+            let n = document.querySelector("#number").value;
+            let d = document.getElementById("d1");
+            let text = document.getElementById("p1");
+            let resultDiv = document.getElementById("result");
+
+            if (rnum == n) {
+                d.classList.add('correct');
+                text.innerText = "You won! Final score is " + score1;
+                player1Correct = true;
+
+                resultDiv.innerText = "You guessed correctly! You win!";
+            } else {
+                score1--;
+
+                if (n > rnum) {
+                    text.style.padding = "10px";
+                    text.innerText = "Too High! Enter a lower value. Your score is " + score1;
+                } else {
+                    text.style.padding = "10px";
+                    text.innerText = "Too Low! Enter a higher value. Your score is " + score1;
+                }
+            }
+        }
+
+        function restart() {
+            rnum = Math.floor(Math.random() * 20) + 1;
+            score1 = 20;
+            player1Correct = false;
+            document.getElementById("d1").classList.remove('correct');
+            document.getElementById("p1").innerText = "";
+            document.getElementById("result").innerText = "";
+            document.getElementById("number").value = "";
+        }
+    </script>
+</body>
+</html>
