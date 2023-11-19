@@ -6,7 +6,6 @@
     <title>Guess the Number Game</title>
     <style>
         body {
-        
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
@@ -14,14 +13,10 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            
-        background-image: url('https://i.pinimg.com/564x/99/d9/23/99d9239aafdc5dd180eeae9bc30dcc6a.jpg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image file */
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-
-
-
+            background-image: url('/noguess.jpg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image file */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         #container {
@@ -103,6 +98,34 @@
         button:hover {
             background-color: #2980b9;
         }
+
+        #win-message {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            color: yellow;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        @keyframes moveText {
+            0% {
+                transform: translateY(-50%);
+            }
+            50% {
+                transform: translateY(50%);
+            }
+            100% {
+                transform: translateY(-50%);
+            }
+        }
+
+        .move-text {
+            display: inline-block;
+            animation: moveText 4s linear infinite;
+        }
     </style>
 </head>
 <body>
@@ -121,6 +144,10 @@
         <div id="result"></div>
 
         <button onclick="restart()">Restart Game</button>
+
+        <div id="win-message">
+            <span class="move-text">You won! Final score is <span id="score-display"></span></span>
+        </div>
     </div>
     
     <script>
@@ -140,6 +167,7 @@
                 player1Correct = true;
 
                 resultDiv.innerText = "You guessed correctly! You win!";
+                showWinMessage(score1);
             } else {
                 score1--;
 
@@ -153,6 +181,11 @@
             }
         }
 
+        function showWinMessage(score) {
+            document.getElementById("score-display").innerText = score;
+            document.getElementById("win-message").style.display = "block";
+        }
+
         function restart() {
             rnum = Math.floor(Math.random() * 20) + 1;
             score1 = 20;
@@ -161,6 +194,7 @@
             document.getElementById("p1").innerText = "";
             document.getElementById("result").innerText = "";
             document.getElementById("number").value = "";
+            document.getElementById("win-message").style.display = "none";
         }
     </script>
 </body>
